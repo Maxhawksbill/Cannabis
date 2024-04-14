@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+
+import certifi
 import dj_database_url
 
 from pathlib import Path
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # External apps
-     'rest_framework',
+    'rest_framework',
     'rest_framework.authtoken',
     "debug_toolbar",
     'django_filters',
@@ -144,6 +146,37 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Celery settings
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+
+CELERY_BEAT_SCHEDULE = {
+    'hello_world': {
+        'task': 'products.tasks.hello_world_task',
+        'schedule': 10.0,
+    },
+    'get_weather': {
+        'task': 'weather.tasks.get_weather_task',
+        'schedule': 60.0,
+    }
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+
+os.environ["SSL_CERT_FILE"] = certifi.where()
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+CELERY_RESULT_BACKEND = "django-db"
+
+GRAPHENE = {
+    "SCHEMA": "Django.schema.schema"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
