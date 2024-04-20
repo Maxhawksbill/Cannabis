@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cannabis Project Google Authentication</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Cannabis Project Google Authentication</h1>
+    <div class="mt-3">
+        {% if user.is_authenticated %}
+            <p>Logged in as {{ user.username }}</p>
+            <a href="{% provider_login_url "google" process="connect" %}" class="btn btn-primary">Connect Google account</a>
+        {% else %}
+            <p>You are not logged in.</p>
+            <a href="{% provider_login_url "google" process="login" %}" class="btn btn-primary">Log in with Google</a>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
