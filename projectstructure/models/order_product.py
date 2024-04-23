@@ -1,9 +1,8 @@
 from django.db import models
-from order import Order
 
 class OrderProduct(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_products')
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_product')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='order_product')
     quantity = models.PositiveIntegerField(default=1)
 
     @property

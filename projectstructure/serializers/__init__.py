@@ -7,8 +7,8 @@ from .inventory import InventorySerializer
 from .promotions import PromotionSerializer
 from .review import ReviewSerializer
 from .transactions import TransactionSerializer
-from .users import UserSerializer, UserProfileSerializer, ExternalUserSerializer, InternalUserSerializer
-
+from .users import UserSerializer
+from .user_profile import UserProfileSerializer
 __all__ = [
     'ProductSerializer',
     'OrderProductSerializer',
@@ -21,6 +21,4 @@ __all__ = [
     'TransactionSerializer',
     'UserSerializer',
     'UserProfileSerializer',
-    'ExternalUserSerializer',
-    'InternalUserSerializer'
 ]

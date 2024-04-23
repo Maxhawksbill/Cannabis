@@ -1,6 +1,6 @@
 import django_filters
-from models import (Product, Address, Category, Inventory, Order, OrderProduct, Promotion, Review, Transaction,
-                    User, UserProfile, InternalUser, ExternalUser)
+from .models import (Product, Address, Category, Inventory, Order, OrderProduct, Promotion, Review, Transaction,
+                    User, UserProfile)
 
 class ProductFilter(django_filters.FilterSet):
     min_price = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
@@ -12,7 +12,8 @@ class ProductFilter(django_filters.FilterSet):
             'name': ['icontains'],
             'price': ['lt', 'gt'],
             'category': ['exact'],
-            'tags': ['exact'],
+            'thc_content': ['exact'],
+            'cbd_content': ['exact'],
             'created_at': ['gt', 'lt'],
         }
 
@@ -117,17 +118,3 @@ class UserProfileFilter(django_filters.FilterSet):
             'start_working_day': ['gt', 'lt'],
         }
 
-class InternalUserFilter(django_filters.FilterSet):
-    class Meta:
-        model = InternalUser
-        fields = {
-            'user': ['exact'],
-            'position': ['icontains'],
-        }
-
-class ExternalUserFilter(django_filters.FilterSet):
-    class Meta:
-        model = ExternalUser
-        fields = {
-            'user': ['exact'],
-        }

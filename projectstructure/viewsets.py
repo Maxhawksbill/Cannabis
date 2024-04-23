@@ -1,13 +1,13 @@
 from rest_framework import viewsets, filters, permissions
 from rest_framework.decorators import action
-from models import (Product, Address, Category, Inventory, Order, OrderProduct, Promotion, Review, Transaction, User, UserProfile,
-                    InternalUser, ExternalUser)
-from serializers import (ProductSerializer, AddressSerializer, CategorySerializer, InventorySerializer, OrderSerializer,
+from .models import Product, Address, Category, Inventory, Order, OrderProduct, Promotion, Review, Transaction, User, \
+    UserProfile
+from .serializers import (ProductSerializer, AddressSerializer, CategorySerializer, InventorySerializer, OrderSerializer,
                          OrderProductSerializer, PromotionSerializer, ReviewSerializer, TransactionSerializer, UserSerializer,
-                         UserProfileSerializer, InternalUserSerializer, ExternalUserSerializer)
-from pagination import PagePerPagePagination
-from filters import (AddressFilter, ProductFilter, PromotionFilter, UserFilter, OrderProductFilter, TransactionFilter, UserProfileFilter,
-                     InternalUserFilter, ExternalUserFilter, CategoryFilter, InventoryFilter, OrderFilter, ReviewFilter)
+                         UserProfileSerializer)
+from .pagination import PagePerPagePagination
+from .filters import (AddressFilter, ProductFilter, PromotionFilter, UserFilter, OrderProductFilter, TransactionFilter, UserProfileFilter,
+                     CategoryFilter, InventoryFilter, OrderFilter, ReviewFilter)
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -85,14 +85,4 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filterset_class = UserProfileFilter
     permission_classes = [permissions.IsAuthenticated]
 
-class InternalUserViewSet(viewsets.ModelViewSet):
-    queryset = InternalUser.objects.all()
-    serializer_class = InternalUserSerializer
-    filterset_class = InternalUserFilter
-    permission_classes = [permissions.IsAdminUser]
 
-class ExternalUserViewSet(viewsets.ModelViewSet):
-    queryset = ExternalUser.objects.all()
-    serializer_class = ExternalUserSerializer
-    filterset_class = ExternalUserFilter
-    permission_classes = [permissions.IsAdminUser]

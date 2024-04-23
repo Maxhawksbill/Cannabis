@@ -3,7 +3,7 @@ from django.core.mail import send_mail, EmailMessage
 from rest_framework.authtoken.admin import User
 
 from Google.api import write_to_sheet
-from models import Product, Order, OrderProduct
+from .models import Product, Order, OrderProduct
 from telegram.client import send_message
 from django.utils import timezone
 from datetime import datetime, timedelta

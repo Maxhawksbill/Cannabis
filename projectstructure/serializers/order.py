@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from projectstructure.models import Order
-from projectstructure.serializers import OrderProductSerializer
+from projectstructure.serializers.order_product import OrderProductSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
     order_products = OrderProductSerializer(many=True, read_only=True)

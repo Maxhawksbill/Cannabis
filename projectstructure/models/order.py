@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.core.exceptions import ValidationError
+from projectstructure.models import Product
 
 class Order(models.Model):
     PAYMENT_METHOD_CHOICES = (
@@ -19,7 +20,7 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    order_products = models.ManyToManyField('OrderProduct', related_name='orders')
+    order_products = models.ManyToManyField(Product, through='OrderProduct')
 
     def check_product_availability(self):
         for item in self.order_products.all():

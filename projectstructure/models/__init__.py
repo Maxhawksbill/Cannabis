@@ -6,8 +6,9 @@ from .order import Order
 from .promotions import Promotion
 from .review import Review
 from .transactions import Transaction
-from .users import User, UserProfile, ExternalUser, InternalUser, AbstractUser
 from .inventory import Inventory
+from .users import User
+from .user_profile import UserProfile
 
 __all__ = [
     'Product',
@@ -19,5 +20,7 @@ __all__ = [
     'Review',
     'Transaction',
     'Inventory',
-    'User'
+    'User',
+    'UserProfile',
 ]
+

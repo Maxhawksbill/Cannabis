@@ -1,5 +1,5 @@
 from django.db import models
-from order import Order
+from projectstructure.models.order import Order
 import uuid
 
 class Transaction(models.Model):

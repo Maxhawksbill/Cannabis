@@ -1,6 +1,5 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
-
 
 class User(AbstractUser):
     ROLES = (
@@ -11,28 +10,17 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLES, default='customer')
     oauth_token = models.CharField(max_length=255, blank=True, null=True)
+    # In the built-in User model (in a custom User model that extends AbstractUser)
+    groups = models.ManyToManyField(Group, related_name='auth_user_set')
+
+    # Add or change the related_name for user_permissions
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        blank=True,
+        related_name='user_custom_permissions',  # Change this to a unique related name
+    )
 
     def __str__(self):
         return self.username
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField('User', on_delete=models.CASCADE)
-    role = models.CharField(max_length=20)  # e.g., admin, customer
-    first_name = models.CharField(max_length=50, blank=True, null=True)
-    last_name = models.CharField(max_length=50, blank=True, null=True)
-    position = models.CharField(max_length=100, blank=True, null=True)
-    start_working_day = models.DateField(blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.user.username} - {self.role}'
-
-class InternalUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='internal_profile')
-    position = models.CharField(max_length=100)
-    # Add any other fields specific to internal users here
-
-
-class ExternalUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='external_profile')
-    # Add any other fields specific to external users here

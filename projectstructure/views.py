@@ -1,8 +1,8 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
-from models import Product
-from tasks import order_daily_statistics
+from projectstructure.models.product import Product
+from projectstructure.tasks import order_daily_statistics
 
 
 # Create your views here.
