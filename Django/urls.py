@@ -41,7 +41,7 @@ router.register('reviews', ReviewViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Cannabis Django API API",
+      title="Snippets API",
       default_version='v1',
       description="Test description",
       terms_of_service="https://www.google.com/policies/terms/",
@@ -53,13 +53,12 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
     path('api/', include(router.urls)),
-    path('telegram/', telegram),
-    path('celery/', celery_view),
-    path('api-registration/', registration),
-    path('api-auth/', obtain_auth_token),
-    path('products', products_view),
+    path('telegram', telegram),
+    path('celery', celery_view),
+    path('api-registration', registration),
+    path('api-auth', obtain_auth_token),
     path('long-view', long_view),
     path("__debug__/", include("debug_toolbar.urls")),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
@@ -67,6 +66,6 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path("graphql", GraphQLView.as_view(graphiql=True)),
     path("", TemplateView.as_view(template_name="index.html")),
-    path("accounts/", include("allauth.urls")),
+    path("accounts", include("allauth.urls")),
     path("logout", LogoutView.as_view()),
 ]

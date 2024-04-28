@@ -9,7 +9,7 @@ from .transactions import Transaction
 from .inventory import Inventory
 from .users import User
 from .user_profile import UserProfile
-
+from .prescription import Prescription
 __all__ = [
     'Product',
     'Category',

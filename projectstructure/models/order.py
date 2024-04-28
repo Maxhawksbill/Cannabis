@@ -15,8 +15,7 @@ class Order(models.Model):
         editable=False,
         default=uuid.uuid4)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50)  # e.g., pending, processing, completed
+    status = models.CharField(max_length=50, default='new')  # e.g., pending, processing, completed
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,10 +27,18 @@ class Order(models.Model):
             if inventory.quantity_available < item.quantity:
                 raise ValidationError(f"Not enough quantity available for product {item.product.name}")
 
+    @property
+    def total_price(self):
+        total_price = 0
+        for order_product in self.order_products.all():
+            total_price += order_product.price
+        return total_price
+
     def save(self, *args, **kwargs):
         self.check_product_availability()
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Order #{self.id} - User: {self.user.username}"
+        return f"Order #{self.uuid} - User: {self.user.username}"
+
    

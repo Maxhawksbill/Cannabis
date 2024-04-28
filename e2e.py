@@ -13,7 +13,7 @@ class TestAdminLogin(unittest.TestCase):
 
     def test_valid_login(self):
         # Open the Django admin login page
-        self.driver.get('http://localhost:8000/admin/')
+        self.driver.get('http://127.0.0.1:8000/admin')
 
         # Find the username input field and enter valid username
         username_element = self.driver.find_element(by='xpath', value='//input[@name="username"]')
@@ -32,7 +32,7 @@ class TestAdminLogin(unittest.TestCase):
 
     def test_invalid_login(self):
         # Open the Django admin login page
-        self.driver.get('http://localhost:8000/admin/')
+        self.driver.get('http://127.0.0.1:8000/admin')
 
         # Find the username input field and enter invalid username
         username_element = self.driver.find_element(by='xpath', value='//input[@name="username"]')

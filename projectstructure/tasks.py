@@ -20,7 +20,7 @@ def order_send_telegram_message(order_id):
     order_products = order.order_products.all()
     text = f"New order {order.uuid} created\n"
     for order_product in order_products:
-        text += f"{order_product.product.title} - {order_product.quantity} - {order_product.price}\n"
+        text += f"{order_product.product.name} - {order_product.quantity} - {order_product.price}\n"
 
     send_message(chat_id, text)
     print('Telegram message sent')
@@ -44,12 +44,12 @@ def order_daily_statistics():
     # Identifying Top 3 products
     top_products = OrderProduct.objects.filter(
         order_id__in=order_ids
-    ).values('product__title').annotate(total_quantity=Sum('quantity')).order_by('-total_quantity')[:3]
+    ).values('product__name').annotate(total_quantity=Sum('quantity')).order_by('-total_quantity')[:3]
 
     # Sending message
     text = f"Number of orders created on {start_of_day.date()}: {order_count}\n"
     for idx, product in enumerate(top_products, start=1):
-        text += f"{idx}. {product['product__title']} - {product['total_quantity']}\n"
+        text += f"{idx}. {product['product__name']} - {product['total_quantity']}\n"
 
     send_message(chat_id, text)
     print('Daily statistics sent')
@@ -63,7 +63,7 @@ def write_google_sheet_products_report():
 
     for product in products:
         products_data.append(
-            [product.title, float(product.price), product.description])
+            [product.name, float(product.price), product.description])
 
     # write to google sheet
     write_to_sheet("A:C", products_data)

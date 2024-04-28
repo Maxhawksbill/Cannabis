@@ -49,7 +49,6 @@ class OrderFilter(django_filters.FilterSet):
         model = Order
         fields = {
             'user': ['exact'],
-            'total_price': ['gt', 'lt'],
             'status': ['exact'],
             'payment_method': ['exact'],
             'created_at': ['gt', 'lt'],
