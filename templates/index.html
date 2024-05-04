@@ -21,6 +21,13 @@
             <a href="{% provider_login_url "google" process="login" %}" class="btn btn-primary">Log in with Google</a>
         {% endif %}
     </div>
+    {% if user.is_authenticated %}
+        <form action="/logout" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">Log Out</button>
+        </form>
+    {% endif %}
 </div>
 </body>
 </html>
+

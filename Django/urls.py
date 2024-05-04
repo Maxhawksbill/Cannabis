@@ -23,11 +23,13 @@ from drf_yasg.views import get_schema_view
 from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
 
 from Django.views import registration, obtain_auth_token, long_view
 from projectstructure.views import celery_view, products_view
 from projectstructure.viewsets import (ProductViewSet, OrderViewSet, AddressViewSet, TransactionViewSet, UserViewSet,
-                                                CategoryViewSet, ReviewViewSet)
+                                        CategoryViewSet, ReviewViewSet)
 from telegram.views import telegram
 
 router = DefaultRouter()
@@ -53,8 +55,9 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('products', products_view),
     path('telegram', telegram),
     path('celery', celery_view),
     path('api-registration', registration),
@@ -66,6 +69,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path("graphql", GraphQLView.as_view(graphiql=True)),
     path("", TemplateView.as_view(template_name="index.html")),
-    path("accounts", include("allauth.urls")),
+    path("accounts/", include("allauth.urls")),
     path("logout", LogoutView.as_view()),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

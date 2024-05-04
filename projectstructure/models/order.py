@@ -8,14 +8,13 @@ class Order(models.Model):
         ('credit_card', 'Credit Card'),
         ('paypal', 'PayPal'),
         ('cash', 'Cash'),
-        # Add more choices as needed
     )
     uuid = models.UUIDField(
         primary_key=True,
         editable=False,
         default=uuid.uuid4)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
-    status = models.CharField(max_length=50, default='new')  # e.g., pending, processing, completed
+    status = models.CharField(max_length=50, default='created')  # e.g., pending, processing, completed
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
