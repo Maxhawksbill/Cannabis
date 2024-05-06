@@ -12,8 +12,7 @@ class Prescription(models.Model):
     ), default='pending')
     verification_notes = models.TextField(blank=True, null=True)
 
-
-    def verify_prescription(prescription):
+    def verify_prescription(self, prescription):
         # Construct the API request based on the prescription details
         api_url = 'https://state-healthcare-office-api.com/verify'
         api_key = 'your-api-key'  # Replace with your actual API key
